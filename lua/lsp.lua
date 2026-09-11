@@ -109,7 +109,8 @@ end,
 local servers = {
 -- clangd = {},
 -- gopls = {},
--- pyright = {},
+pyright = {},
+  zls = {},
 -- tsc = {},
 --
 -- Some languages (like rust) have entire language plugins that can be useful:
