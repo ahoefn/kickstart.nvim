@@ -17,14 +17,14 @@ require 'utils'
 --
 -- We first install it from https://github.com/NMAC427/guess-indent.nvim
 -- and then call its `setup()` function to start it with default settings.
-vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
+vim.pack.add { Gh 'NMAC427/guess-indent.nvim' }
 require('guess-indent').setup {}
 
 -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
 --
 -- See `:help gitsigns` to understand what each configuration key does.
 -- Adds git related signs to the gutter, as well as utilities for managing changes
-vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
+vim.pack.add { Gh 'lewis6991/gitsigns.nvim' }
 local gitsigns = require 'gitsigns'
 gitsigns.setup {
   signs = {
@@ -69,15 +69,15 @@ gitsigns.setup {
     vim.keymap.set('n', '<leader>hQ', function() gitsigns.setqflist 'all' end, { desc = 'git hunk [Q]uickfix list (all files in repo)', buf = bufnr })
     vim.keymap.set('n', '<leader>hq', gitsigns.setqflist, { desc = 'git hunk [q]uickfix list (all changes in this file)', buf = bufnr })
     -- Toggles
-    vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line', buf = bufnr })
-    vim.keymap.set('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = '[T]oggle git intra-line [w]ord diff', buf = bufnr })
+    vim.keymap.set('n', '<leader>tob', gitsigns.toggle_current_line_blame, { desc = '[To]ggle git show [b]lame line', buf = bufnr })
+    vim.keymap.set('n', '<leader>tow', gitsigns.boggle_word_diff, { desc = '[To]ggle git intra-line [w]ord diff', buf = bufnr })
     -- Text object
     vim.keymap.set({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = 'text object [i]nside [h]unk', buf = bufnr })
   end,
 }
 
 -- Useful plugin to show you pending keybinds.
-vim.pack.add { gh 'folke/which-key.nvim' }
+vim.pack.add { Gh 'folke/which-key.nvim' }
 require('which-key').setup {
   -- Delay between pressing a key and opening which-key (milliseconds)
   delay = 0,
@@ -85,7 +85,9 @@ require('which-key').setup {
   -- Document existing key chains
   spec = {
     { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-    { '<leader>t', group = '[T]oggle' },
+    { '<leader>t', group = '[T]abs', mode = {'n','v'} },
+    { '<leader>b', group = '[B]uild commands', mode = {'n','v'} },
+    { '<leader>w', group = '[W]indow', mode = {'n','v'} },
     { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
     { 'gr', group = 'LSP Actions', mode = { 'n' } },
   },
@@ -97,7 +99,7 @@ require('which-key').setup {
 -- change the command under that to load whatever the name of that colorscheme is.
 --
 -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-vim.pack.add { gh 'folke/tokyonight.nvim' }
+vim.pack.add { Gh 'folke/tokyonight.nvim' }
 ---@diagnostic disable-next-line: missing-fields
 require('tokyonight').setup {
   styles = {
@@ -118,41 +120,9 @@ require('tokyonight').setup {
 vim.cmd.colorscheme 'tokyonight-night'
 
 -- Highlight todo, notes, etc in comments
-vim.pack.add { gh 'folke/todo-comments.nvim' }
+vim.pack.add { Gh 'folke/todo-comments.nvim' }
 require('todo-comments').setup { signs = false }
 
--- [[ mini.nvim ]]
---  A collection of various small independent plugins/modules
-vim.pack.add { gh 'nvim-mini/mini.nvim' }
-
--- If a nerd font is available, load the icons module for pretty icons in various plugins.
-if vim.g.have_nerd_font then
-  require('mini.icons').setup()
-  -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
-  MiniIcons.mock_nvim_web_devicons()
-end
-
--- Better Around/Inside textobjects
---
--- Examples:
---  - va)  - [V]isually select [A]round [)]paren
---  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
---  - ci'  - [C]hange [I]nside [']quote
-require('mini.ai').setup {
-  -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
-  mappings = {
-    around_next = 'aa',
-    inside_next = 'ii',
-  },
-  n_lines = 500,
-}
-
--- Add/delete/replace surroundings (brackets, quotes, etc.)
---
--- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
--- - sd'   - [S]urround [D]elete [']quotes
--- - sr)'  - [S]urround [R]eplace [)] [']
-require('mini.surround').setup()
 
 -- NOTE: Old statusline of kickstart, I replaced it with lualine
 --

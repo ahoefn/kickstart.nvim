@@ -6,11 +6,13 @@ require 'core.keybinds'
 require 'lsp'
 require 'autocomplete'
 
+require 'plugins.mini'
 require 'plugins.telescope'
 require 'plugins.conform'
 require 'plugins.treesitter'
 
-
+-- My own custom plugins
+require 'custom.zig-watcher'.setup()
 
 -- ============================================================
 -- SECTION 10: OPTIONAL EXAMPLES / NEXT STEPS

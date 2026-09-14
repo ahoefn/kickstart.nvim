@@ -11,10 +11,10 @@ do
   --  See `:help nvim-treesitter-intro`
 
   -- NOTE: You can also specify a branch or a specific commit
-  vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
+  vim.pack.add { { src = Gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'zig' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
@@ -65,3 +65,7 @@ do
     end,
   })
 end
+
+-- NOTE:(ARNO) add context bar to top of screen
+vim.pack.add { { src = Gh 'nvim-treesitter/nvim-treesitter-context', version = 'master' } }
+require 'treesitter-context'.setup { multi_line_threshold = 1}

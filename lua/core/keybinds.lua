@@ -10,7 +10,6 @@ vim.keymap.set('n', '<kEnter>', '<CR>', { silent = true })
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- tabs
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -18,7 +17,11 @@ vim.g.maplocalleader = ' '
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-  
+
+vim.keymap.set('n', '<leader>x', function()
+  vim.cmd.write()
+  vim.cmd.source '%'
+end, { desc = 'Save and e[X]ecute current file.' })
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -36,17 +39,15 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<leader>wh', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<leader>wl', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<leader>wj', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<leader>wk', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- splitting and closing shortcuts
-vim.keymap.set('n', '<C-s>',':split<CR>', { desc = '[S]plit along the horizontal axis' })
-vim.keymap.set('n', '<C-v>',':vsplit<CR>', { desc = 'Split along the [v]ertical axis' })
-vim.keymap.set('n', '<C-q>',':close<CR>', { desc = '[Q]uit active window' })
-
-
+vim.keymap.set('n', '<leader>ws', ':split<CR>', { desc = '[S]plit along the horizontal axis' })
+vim.keymap.set('n', '<leader>wv', ':vsplit<CR>', { desc = 'Split along the [v]ertical axis' })
+vim.keymap.set('n', '<leader>wq', ':close<CR>', { desc = '[Q]uit active window' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -54,7 +55,18 @@ vim.keymap.set('n', '<C-q>',':close<CR>', { desc = '[Q]uit active window' })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- tabs
+vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { desc = 'Create a new tab' })
+vim.keymap.set('n', '<leader>tq', ':tabclose<CR>', { desc = 'Close the current tab' })
+vim.keymap.set('n', '<leader>tl', ':tabnext<CR>', { desc = 'Go to the next tab' })
+vim.keymap.set('n', '<leader>th', ':tabprevious<CR>', { desc = 'Go to the previous tab' })
+vim.keymap.set('n', '<leader>tj', ':tabfirst<CR>', { desc = 'Go to the last tab' })
+vim.keymap.set('n', '<leader>tk', ':tabclose<CR>', { desc = 'Go to the first tab' })
 
-
-vim.keymap.set('n','<leader>tn',':tabnew<CR>')
-vim.keymap.set('n','<leader>tq',':tabclose<CR>')
+-- FIXME: temporrary reload command
+vim.keymap.set('n', '<leader>r', function()
+  for module_name in pairs(package.loaded) do
+    if module_name:match '^custom%.zig%-watcher' then package.loaded[module_name] = nil end
+  end
+  require('custom.zig-watcher').setup()
+end)

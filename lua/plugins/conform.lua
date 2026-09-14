@@ -4,7 +4,7 @@ require 'utils'
 -- conform.nvim setup and keymap
 -- ============================================================
 -- [[ Formatting ]]
-vim.pack.add { gh 'stevearc/conform.nvim' }
+vim.pack.add { Gh 'stevearc/conform.nvim' }
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -30,6 +30,7 @@ require('conform').setup {
     --
     -- You can use 'stop_after_first' to run the first available formatter from the list
     -- javascript = { "prettierd", "prettier", stop_after_first = true },
+    zig = { 'zigfmt'}
   },
 }
 

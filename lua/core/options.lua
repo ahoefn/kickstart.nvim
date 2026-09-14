@@ -45,7 +45,7 @@ vim.o.showmode = false
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
-vim.o.breakindent = true
+-- vim.o.breakindent = true
 
 -- Enable undo/redo changes even after closing and reopening a file
 vim.o.undofile = true
