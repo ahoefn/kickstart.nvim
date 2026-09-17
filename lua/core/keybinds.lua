@@ -23,7 +23,17 @@ vim.keymap.set('n', '<leader>x', function()
   vim.cmd.source '%'
 end, { desc = 'Save and e[X]ecute current file.' })
 
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>ql', vim.diagnostic.setloclist, { desc = 'Open [Q]uick diagnostic [L]ocation list' })
+vim.keymap.set('n', '<leader>qq', function()
+  local winid = vim.fn.getqflist({ winid = 0 }).winid
+  if winid ~= 0 then
+    vim.cmd.cclose()
+  else
+    vim.diagnostic.setqflist()
+  end
+end, { desc = 'Toggle [Q]uick diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qcl', function() vim.fn.setloclist(0, {}) end, { desc = '[C]lear [L]ocation list' })
+vim.keymap.set('n', '<leader>qcq', function() vim.fn.setqflist {} end, { desc = '[C]lear [Q]uickfix list' })
 
 -- note: this won't work in all terminal emulators/tmux/etc. try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
@@ -56,17 +66,40 @@ vim.keymap.set('n', '<leader>wq', ':close<CR>', { desc = '[Q]uit active window' 
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- tabs
-vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { desc = 'Create a new tab' })
-vim.keymap.set('n', '<leader>tq', ':tabclose<CR>', { desc = 'Close the current tab' })
-vim.keymap.set('n', '<leader>tl', ':tabnext<CR>', { desc = 'Go to the next tab' })
-vim.keymap.set('n', '<leader>th', ':tabprevious<CR>', { desc = 'Go to the previous tab' })
-vim.keymap.set('n', '<leader>tj', ':tabfirst<CR>', { desc = 'Go to the last tab' })
-vim.keymap.set('n', '<leader>tk', ':tabclose<CR>', { desc = 'Go to the first tab' })
+vim.keymap.set('n', '<leader>wtn', ':tabnew<CR>', { desc = '[T]ab - [N]ew' })
+vim.keymap.set('n', '<leader>wtq', ':tabclose<CR>', { desc = '[T]ab - [Q]uit' })
+vim.keymap.set('n', '<leader>wtl', ':tabnext<CR>', { desc = '[T]ab - [N]ext' })
+vim.keymap.set('n', '<leader>wth', ':tabprevious<CR>', { desc = '[T]ab - [P]revious' })
+vim.keymap.set('n', '<leader>wtj', ':tabfirst<CR>', { desc = '[T]ab - First' })
+vim.keymap.set('n', '<leader>wtk', ':tabclose<CR>', { desc = '[T]ab - Last' })
 
--- FIXME: temporrary reload command
-vim.keymap.set('n', '<leader>r', function()
-  for module_name in pairs(package.loaded) do
-    if module_name:match '^custom%.zig%-watcher' then package.loaded[module_name] = nil end
-  end
-  require('custom.zig-watcher').setup()
-end)
+-- Oil:
+vim.keymap.set('n', '<leader>e', ':Oil<CR>', { desc = '[E]xpore files from current buffer.' })
+
+-- Useful plugin to show you pending keybinds.
+vim.pack.add { Gh 'folke/which-key.nvim' }
+require('which-key').setup {
+  -- Delay between pressing a key and opening which-key (milliseconds)
+  delay = 0,
+  icons = { mappings = vim.g.have_nerd_font },
+  -- Document existing key chains
+  spec = {
+    { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+    { '<leader>t', group = '[T]abs', mode = { 'n', 'v' } },
+    { '<leader>b', group = '[B]uild commands', mode = { 'n', 'v' } },
+    { '<leader>w', group = '[W]indow', mode = { 'n', 'v' } },
+    { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+    { '<leader>q', group = 'Open [Q]uickfix lists', mode = { 'n', 'v' } },
+    { 'gr', group = 'LSP Actions', mode = { 'n' } },
+    { '<leader>a', group = '[A]ctions', mode = { 'n', 'v' } },
+  },
+}
+
+-- -- FIXME: temporrary reload command
+--
+-- vim.keymap.set('n', '<leader>r', function()
+--   for module_name in pairs(package.loaded) do
+--     if module_name:match '^custom%.zig%-watcher' then package.loaded[module_name] = nil end
+--   end
+--   require('custom.zig-watcher').setup()
+-- end)

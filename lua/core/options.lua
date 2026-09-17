@@ -6,6 +6,7 @@ vim.o.expandtab = true
 
 -- visual
 vim.o.cmdheight = 2
+vim.o.winborder = 'rounded'
 
 
 

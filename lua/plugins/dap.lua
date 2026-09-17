@@ -1,0 +1,25 @@
+-- vim.pack.add {
+--   'https://github.com/mfussenegger/nvim-dap',
+--   'https://github.com/mfussenegger/nvim-dap-python',
+--   'https://github.com/nvim-neotest/nvim-nio',
+--   'https://github.com/rcarriga/nvim-dap-ui',
+-- }
+--
+-- local dap = require 'dap'
+-- local dapui = require 'dapui'
+--
+-- require('dap-python').setup('python')
+-- require('dap-python').test_runner = 'pytest'
+--
+-- dapui.setup()
+-- dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+-- dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+-- dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+--
+-- vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = '[D]ebug [B]reakpoint' })
+-- vim.keymap.set('n', '<leader>dc', dap.continue, { desc = '[D]ebug [C]ontinue/start' })
+-- vim.keymap.set('n', '<leader>di', dap.step_into, { desc = '[D]ebug step [I]nto' })
+-- vim.keymap.set('n', '<leader>do', dap.step_over, { desc = '[D]ebug step [O]ver' })
+-- vim.keymap.set('n', '<leader>dO', dap.step_out, { desc = '[D]ebug step [O]ut' })
+-- vim.keymap.set('n', '<leader>dq', dap.terminate, { desc = '[D]ebug [Q]uit' })
+-- vim.keymap.set('n', '<leader>du', dapui.toggle, { desc = '[D]ebug [U]I' })
