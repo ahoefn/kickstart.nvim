@@ -3,7 +3,6 @@
 -- formatting
 vim.o.autoindent = true
 vim.o.expandtab = true
-vim.o.winborder  = "rounded"
 
 
 	-- "bold": Bold line box.
