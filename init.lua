@@ -1,5 +1,5 @@
 -- Set this for logging which functino we are in 
-local debug_mode  = false
+local debug_mode  = true
 require'debug_logs'.setup(debug_mode)
 
 if vim.fn.has("win32") == 1 then

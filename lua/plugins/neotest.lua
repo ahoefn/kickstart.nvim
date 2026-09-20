@@ -53,3 +53,13 @@ vim.keymap.set('n', '<leader>tl', function() neotest.output_panel.toggle() end, 
 ---@diagnostic disable-next-line: missing-fields
 vim.keymap.set('n', '<leader>td', function() neotest.run.run { strategy = 'dap' } end, { desc = '[T]est [D]ebug nearest' })
 vim.keymap.set('n', '<leader>ta', function() neotest.run.run(vim.fs.normalize(vim.fn.getcwd())) end, { desc = '[T]est run [A]ll' })
+
+-- put tests in qwuickfix
+vim.keymap.set("n", "<leader>tq", function()
+  -- Get the namespace used by neotest
+  local ns = vim.api.nvim_create_namespace("neotest")
+  -- Populate the quickfix list with diagnostics from that namespace
+  vim.diagnostic.setqflist({ namespace = ns })
+  -- Open the quickfix window
+  vim.cmd("copen")
+end, { desc = "Send neotest errors to quickfix" })
