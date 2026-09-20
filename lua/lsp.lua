@@ -109,7 +109,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  pyright = {},
+  -- pyright = {},
+  basedpyright = {
+    settings = {
+  typeCheckingMode = "basic"
+    },
+  },
   zls = {
     settings = {
       enable_build_on_save = true,
