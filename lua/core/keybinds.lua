@@ -29,7 +29,7 @@ vim.keymap.set('n', '<leader>qq', function()
   if winid ~= 0 then
     vim.cmd.cclose()
   else
-    vim.diagnostic.setqflist()
+    vim.cmd.copen()
   end
 end, { desc = 'Toggle [Q]uick diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>qcl', function() vim.fn.setloclist(0, {}) end, { desc = '[C]lear [L]ocation list' })

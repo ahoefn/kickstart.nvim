@@ -22,12 +22,16 @@ local neotest = require 'neotest'
 -- end
 
 local python_root = '.venv/Scripts/python.exe'
+---@diagnostic disable-next-line: missing-fields
 neotest.setup {
   adapters = {
     require 'neotest-python' {
       runner = 'pytest',
       python = python_root,
       dap = { justMyCode = false },
+    },
+    require 'neotest-zig' {
+      dap = { adpater = 'lldb' },
     },
   },
   -- discovery = {
@@ -46,5 +50,6 @@ vim.keymap.set('n', '<leader>tf', function() neotest.run.run(vim.fn.expand '%') 
 vim.keymap.set('n', '<leader>ts', function() neotest.summary.toggle() end, { desc = '[T]est [S]ummary' })
 vim.keymap.set('n', '<leader>to', function() neotest.output.open { enter = true } end, { desc = '[T]est [O]utput' })
 vim.keymap.set('n', '<leader>tl', function() neotest.output_panel.toggle() end, { desc = '[T]est [L]og panel' })
+---@diagnostic disable-next-line: missing-fields
 vim.keymap.set('n', '<leader>td', function() neotest.run.run { strategy = 'dap' } end, { desc = '[T]est [D]ebug nearest' })
 vim.keymap.set('n', '<leader>ta', function() neotest.run.run(vim.fs.normalize(vim.fn.getcwd())) end, { desc = '[T]est run [A]ll' })
