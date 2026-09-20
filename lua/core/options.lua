@@ -4,6 +4,14 @@
 vim.o.autoindent = true
 vim.o.expandtab = true
 
+
+	-- "bold": Bold line box.
+	-- "double": Double-line box.
+	-- "none": No border.
+	-- "rounded": Like "single", but with rounded corners ("╭" etc.).
+	-- "shadow": Drop shadow effect, by blending with the background.
+	-- "single": Single-line box.
+	-- "solid": Adds padding by a single whitespace cell.
 -- visual
 vim.o.cmdheight = 2
 vim.o.winborder = 'rounded'
