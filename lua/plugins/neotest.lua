@@ -30,9 +30,10 @@ neotest.setup {
       python = python_root,
       dap = { justMyCode = false },
     },
-    require 'neotest-zig' {
-      dap = { adpater = 'lldb' },
-    },
+    -- NOTE: uncomment for zig dev
+    -- require 'neotest-zig' {
+    --   dap = { adpater = 'lldb' },
+    -- },
   },
   -- discovery = {
   --   enabled = true,

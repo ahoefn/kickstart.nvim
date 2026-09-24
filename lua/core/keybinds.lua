@@ -88,10 +88,11 @@ require('which-key').setup {
     { '<leader>t', group = '[T]abs', mode = { 'n', 'v' } },
     { '<leader>b', group = '[B]uild commands', mode = { 'n', 'v' } },
     { '<leader>w', group = '[W]indow', mode = { 'n', 'v' } },
-    { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+    { '<leader>g', group = '[G]it', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
     { '<leader>q', group = 'Open [Q]uickfix lists', mode = { 'n', 'v' } },
     { 'gr', group = 'LSP Actions', mode = { 'n' } },
     { '<leader>a', group = '[A]ctions', mode = { 'n', 'v' } },
+    { '<leader>h', group = '[H]arpoon', mode = { 'n' } },
   },
 }
 

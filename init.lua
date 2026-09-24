@@ -1,5 +1,5 @@
 -- Set this for logging which functino we are in 
-local debug_mode  = true
+local debug_mode  = false
 require'debug_logs'.setup(debug_mode)
 
 if vim.fn.has("win32") == 1 then
@@ -26,11 +26,12 @@ require 'plugins.treesitter'
 require 'lsp'
 require 'autocomplete'
 -- require 'plugins.dap'
-require 'plugins.neotest'
 require 'plugins.oil'
 require 'plugins.gitsigns'
+require 'plugins.harpoon'
 
 
+require 'plugins.neotest'
 
 --
 -- My own custom plugins
