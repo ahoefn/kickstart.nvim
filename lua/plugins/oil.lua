@@ -7,3 +7,6 @@ require("oil").setup({
     autosave_changes = "unmodified",
   },
 })
+
+-- Keymaps:
+vim.keymap.set('n', '<leader>e', ':Oil<CR>', { desc = '[E]xpore files from current buffer.' })

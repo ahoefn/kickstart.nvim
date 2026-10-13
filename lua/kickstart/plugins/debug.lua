@@ -12,17 +12,18 @@ vim.pack.add {
   'https://github.com/nvim-neotest/nvim-nio',
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
-  'https://github.com/leoluz/nvim-dap-go',
+  "https://github.com/theHamsta/nvim-dap-virtual-text",
 }
 
 -- Basic debugging keymaps, feel free to change to your liking!
 
-vim.keymap.set('n', '<leader>db',function() require('dap').toggle_breakpoint() end, { desc = '[D]ebug [B]reakpoint' })
-vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end, { desc = '[D]ebug [C]ontinue/start' })
+vim.keymap.set('n', '<leader>db', function() require('dap').toggle_breakpoint() end, { desc = '[D]ebug [B]reakpoint' })
+vim.keymap.set('n', '<leader>dr', function() require('dap').continue() end, { desc = '[D]ebug [R]un' })
 vim.keymap.set('n', '<leader>di', function() require('dap').step_into() end, { desc = '[D]ebug step [I]nto' })
 vim.keymap.set('n', '<leader>do', function() require('dap').step_over() end, { desc = '[D]ebug step [O]ver' })
 vim.keymap.set('n', '<leader>dO', function() require('dap').step_out() end, { desc = '[D]ebug step [O]ut' })
 vim.keymap.set('n', '<leader>dq', function() require('dap').terminate() end, { desc = '[D]ebug [Q]uit' })
+vim.keymap.set('n', '<leader>dc', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = '[D]ebug: [C]onditional breakpoint' })
 vim.keymap.set('n', '<leader>du', function() require('dapui').toggle() end, { desc = '[D]ebug [U]I' })
 
 -- Old ones from kcikstart
@@ -52,7 +53,7 @@ require('mason-nvim-dap').setup {
   ensure_installed = {
     -- Update this to ensure that you have the debuggers for the langs you want
     -- 'delve',
-    'python'
+    'python',
   },
 }
 
@@ -81,16 +82,16 @@ dapui.setup {
 }
 
 -- Change breakpoint icons
--- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
--- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
--- local breakpoint_icons = vim.g.have_nerd_font
---     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
---   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
--- for type, icon in pairs(breakpoint_icons) do
---   local tp = 'Dap' .. type
---   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
---   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
--- end
+vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+local breakpoint_icons = vim.g.have_nerd_font
+    and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+  or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+for type, icon in pairs(breakpoint_icons) do
+  local tp = 'Dap' .. type
+  local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+  vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+end
 
 dap.listeners.after.event_initialized['dapui_config'] = dapui.open
 dap.listeners.before.event_terminated['dapui_config'] = dapui.close
@@ -104,3 +105,16 @@ dap.listeners.before.event_exited['dapui_config'] = dapui.close
 --     detached = vim.fn.has 'win32' == 0,
 --   },
 -- }
+--
+--
+-- For nice highlighting
+require("nvim-dap-virtual-text").setup({
+  enabled = true,
+  enabled_commands = true,            -- :DapVirtualText{Enable,Disable,Toggle,ForceRefresh}
+  highlight_changed_variables = true, -- changed values use the NvimDapVirtualTextChanged highlight
+  show_stop_reason = true,
+  commented = false,
+  virt_text_pos = "eol",           -- or "eol"
+  all_frames = false,
+})
+
