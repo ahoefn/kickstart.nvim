@@ -46,7 +46,7 @@ require('tokyonight').setup {
 vim.cmd.colorscheme 'tokyonight-night'
 
 -- separate highlighting of module imports
--- vim.api.nvim_set_hl(0, '@module.python', { link = '@namespace' })
+vim.api.nvim_set_hl(0, '@module.python', { link = '@namespace' })
 
 -- Highlight todo, notes, etc in comments
 vim.pack.add { Gh 'folke/todo-comments.nvim' }

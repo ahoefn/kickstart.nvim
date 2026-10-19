@@ -31,19 +31,20 @@ neotest.setup {
       dap = { justMyCode = false },
     },
     -- NOTE: uncomment for zig dev
-    -- require 'neotest-zig' {
-    --   dap = { adpater = 'lldb' },
-    -- },
+    require 'neotest-zig' {
+      dap = { adpater = 'lldb' },
+    },
   },
+  log_level = vim.log.levels.DEBUG
   -- discovery = {
   --   enabled = true,
   --   concurrent = 1,
   --   filter_dir = function(name, rel_path, root) return name ~= '.venv' and name ~= 'node_modules' and name ~= '.git' and name ~= '__pycache__' end,
   -- },
-  discovery = {
-    enabled = false,
-    concurrent = 1,
-  },
+  -- discovery = {
+  --   enabled = true,
+  --   concurrent = 1,
+  -- },
 }
 
 vim.keymap.set('n', '<leader>tn', function() neotest.run.run() end, { desc = '[T]est [N]earest' })

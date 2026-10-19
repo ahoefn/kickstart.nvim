@@ -52,7 +52,8 @@ require('mason-nvim-dap').setup {
   ensure_installed = {
     -- Update this to ensure that you have the debuggers for the langs you want
     -- 'delve',
-    'python'
+    'gdb',
+    'python',
   },
 }
 
@@ -104,3 +105,24 @@ dap.listeners.before.event_exited['dapui_config'] = dapui.close
 --     detached = vim.fn.has 'win32' == 0,
 --   },
 -- }
+
+
+-- Zig specific setup
+dap.adapters.gdb = {
+  type = "executable",
+  command = "gdb",
+  args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+}
+
+dap.configurations.zig = {
+  {
+    name = "Launch",
+    type = "gdb",
+    request = "launch",
+    program = function()
+      return vim.fn.input("Executable: ", vim.fn.getcwd() .. "/zig-out/bin/", "file")
+    end,
+    cwd = "${workspaceFolder}",
+    stopAtBeginningOfMainSubprogram = false,
+  },
+}

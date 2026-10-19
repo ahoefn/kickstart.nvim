@@ -1,9 +1,8 @@
 -- Set this for logging which functino we are in 
-local debug_mode  = false
+local debug_mode  = true
 require'debug_logs'.setup(debug_mode)
 
 if vim.fn.has("win32") == 1 then
-
 -- FIXME: this is some hacky windows only fix -> proper fix needs to be 
   -- done at some point
   require 'windows_init'
@@ -32,6 +31,7 @@ require 'plugins.harpoon'
 
 
 require 'plugins.neotest'
+
 
 --
 -- My own custom plugins
