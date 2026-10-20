@@ -29,6 +29,7 @@ require 'plugins.oil'
 require 'plugins.gitsigns'
 require 'plugins.harpoon'
 
+require 'plugins.diffview'
 
 require 'plugins.neotest'
 

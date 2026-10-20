@@ -112,7 +112,20 @@ local servers = {
   -- pyright = {},
   basedpyright = {
     settings = {
-  typeCheckingMode = "basic"
+      typeCheckingMode = 'basic',
+      basedpyright = {
+        analysis = {
+          diagnosticSeverityOverrides = {
+            reportUnusedImport = 'warning',
+            reportUnusedVariable = 'warning',
+            reportUnusedParameter = 'warning',
+            reportUnusedClass = 'warning',
+            reportUnusedFunction = 'warning',
+            reportUnusedExpression = 'warning',
+            reportUnusedCallResult = 'warning',
+          },
+        },
+      },
     },
   },
   zls = {
@@ -130,50 +143,46 @@ local servers = {
   -- rust_analyzer = {},
 
   stylua = {}, -- Used to format Lua code
-lua_ls = {
-  on_init = function(client)
+  lua_ls = {
+    on_init = function(client)
       client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
-    if client.workspace_folders then
-      local path = client.workspace_folders[1].name
-      if
-        path ~= vim.fn.stdpath('config')
-        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-      then
-        return
+      if client.workspace_folders then
+        local path = client.workspace_folders[1].name
+        if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
       end
-    end
 
-    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most
-        -- likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Tell the language server how to find Lua modules same way as Neovim
-        -- (see `:h lua-module-load`)
-        path = {
-          'lua/?.lua',
-          'lua/?/init.lua',
+      client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most
+          -- likely LuaJIT in the case of Neovim)
+          version = 'LuaJIT',
+          -- Tell the language server how to find Lua modules same way as Neovim
+          -- (see `:h lua-module-load`)
+          path = {
+            'lua/?.lua',
+            'lua/?/init.lua',
+          },
         },
-      },
-      -- Make the server aware of Neovim runtime files
-      workspace = {
-        checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
-          -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
-          vim.api.nvim_get_runtime_file("lua/lspconfig", false)[1],
+        -- Make the server aware of Neovim runtime files
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+            -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
+            vim.api.nvim_get_runtime_file('lua/lspconfig', false)[1],
+          },
+          -- Or pull in all of 'runtimepath'.
+          -- NOTE: this is a lot slower and will cause issues when working on
+          -- your own configuration.
+          -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+          -- library = vim.api.nvim_get_runtime_file('', true),
         },
-        -- Or pull in all of 'runtimepath'.
-        -- NOTE: this is a lot slower and will cause issues when working on
-        -- your own configuration.
-        -- See https://github.com/neovim/nvim-lspconfig/issues/3189
-        -- library = vim.api.nvim_get_runtime_file('', true),
-      },
-    })
-  end,
-  settings = {
-    Lua = {},
-  },},
+      })
+    end,
+    settings = {
+      Lua = {},
+    },
+  },
   -- Special Lua Config, as recommended by neovim help docs
   -- lua_ls = {
   --   on_init = function(client)
@@ -235,8 +244,8 @@ vim.list_extend(ensure_installed, {
 })
 
 -- NOTE: also add debuggers
-local ensure_installed_debug = {'debugpy'}
-ensure_installed = vim.list_extend(ensure_installed,ensure_installed_debug)
+local ensure_installed_debug = { 'debugpy' }
+ensure_installed = vim.list_extend(ensure_installed, ensure_installed_debug)
 
 require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

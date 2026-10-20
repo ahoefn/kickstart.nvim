@@ -11,7 +11,8 @@ require 'utils'
 --  See `:help vim.version.range()` for more info
 vim.pack.add { { src = Gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
 require('luasnip').setup {}
-
+local snippet_directory = vim.fs.joinpath(vim.fn.stdpath("config"),"lua","luasnippets")
+require("luasnip.loaders.from_lua").lazy_load({ paths = { snippet_directory } })
 -- `friendly-snippets` contains a variety of premade snippets.
 --    See the README about individual language/framework/plugin snippets:
    -- https://github.com/rafamadriz/friendly-snippets
@@ -62,11 +63,12 @@ require('blink.cmp').setup {
     documentation = { auto_show = false, auto_show_delay_ms = 500 },
   },
 
-  sources = {
-    default = { 'lsp', 'path', 'snippets' },
-  },
 
   snippets = { preset = 'luasnip' },
+  sources = {
+    default = { 'lsp', 'path', 'snippets' },
+    providers = {snippets = {score_offset = 100}}
+  },
 
   -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
   -- which automatically downloads a prebuilt binary when enabled.

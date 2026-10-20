@@ -73,8 +73,6 @@ vim.keymap.set('n', '<leader>wth', ':tabprevious<CR>', { desc = '[T]ab - [P]revi
 vim.keymap.set('n', '<leader>wtj', ':tabfirst<CR>', { desc = '[T]ab - First' })
 vim.keymap.set('n', '<leader>wtk', ':tabclose<CR>', { desc = '[T]ab - Last' })
 
--- Oil:
-vim.keymap.set('n', '<leader>e', ':Oil<CR>', { desc = '[E]xpore files from current buffer.' })
 
 -- Useful plugin to show you pending keybinds.
 vim.pack.add { Gh 'folke/which-key.nvim' }
